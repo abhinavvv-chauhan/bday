@@ -1,57 +1,86 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Music, Music3 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function MusicToggle() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // We don't have a music file yet, but this structure allows it to be added easily later
     audioRef.current = new Audio("/audio/romantic.mp3");
     audioRef.current.loop = true;
-    audioRef.current.volume = 0.5;
+    audioRef.current.volume = 0.4;
+    return () => {
+      audioRef.current?.pause();
+    };
   }, []);
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
     if (!audioRef.current) return;
-    
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      // Catch potential autoplay restrictions
-      audioRef.current.play().catch((e) => console.log("Audio play failed:", e));
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch {
+        // Autoplay blocked — silently fail
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
   return (
-    <motion.div 
-      className="fixed top-6 right-6 z-50"
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 2, duration: 0.5 }}
+    <motion.button
+      onClick={togglePlay}
+      className="fixed top-5 right-5 z-[999] w-11 h-11 rounded-full flex items-center justify-center glass ripple-btn"
+      initial={{ opacity: 0, scale: 0, y: -10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 2.5, duration: 0.5, type: "spring" }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.92 }}
+      aria-label={isPlaying ? "Pause music" : "Play music"}
     >
-      <button
-        onClick={togglePlay}
-        className="w-12 h-12 bg-white/30 backdrop-blur-md rounded-full shadow-lg border border-white/50 flex items-center justify-center transition-all hover:bg-white/50 hover:scale-110 active:scale-95"
-        aria-label="Toggle music"
-      >
+      <AnimatePresence mode="wait">
         {isPlaying ? (
-          <div className="relative flex items-center justify-center">
-            <Music3 className="w-5 h-5 text-dark-plum" />
-            <motion.div 
-              className="absolute -top-1 -right-1 w-2 h-2 bg-rose rounded-full"
-              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            />
-          </div>
+          <motion.div
+            key="playing"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            className="flex items-end gap-[2px] h-4"
+          >
+            {[1, 1.5, 0.8, 1.3, 1].map((h, i) => (
+              <motion.div
+                key={i}
+                className="w-[3px] rounded-full"
+                style={{ background: "#C0717A" }}
+                animate={{ scaleY: [h, h * 0.4, h] }}
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.1,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </motion.div>
         ) : (
-          <Music className="w-5 h-5 text-dark-plum/70" />
+          <motion.div
+            key="stopped"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M9 18V5l12-2v13" stroke="#6B4B4B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="6" cy="18" r="3" stroke="#6B4B4B" strokeWidth="2"/>
+              <circle cx="18" cy="16" r="3" stroke="#6B4B4B" strokeWidth="2"/>
+            </svg>
+          </motion.div>
         )}
-      </button>
-    </motion.div>
+      </AnimatePresence>
+    </motion.button>
   );
 }
