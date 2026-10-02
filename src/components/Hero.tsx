@@ -191,8 +191,13 @@ export default function Hero() {
                       visible: { opacity: 1, y: 0, rotateX: 0 },
                     }}
                     transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                    className="inline-block text-4xl sm:text-5xl md:text-7xl font-serif leading-tight shimmer-text"
-                    style={{ transformOrigin: "bottom center", transformStyle: "preserve-3d" }}
+                    className="inline-block text-4xl sm:text-5xl md:text-7xl font-serif leading-tight"
+                    style={{
+                      transformOrigin: "bottom center",
+                      transformStyle: "preserve-3d",
+                      color: "#F9D6D6",
+                      textShadow: "0 2px 30px rgba(230,176,170,0.9), 0 0 60px rgba(192,113,122,0.5)",
+                    }}
                   >
                     {char === " " ? "\u00A0" : char}
                   </motion.span>

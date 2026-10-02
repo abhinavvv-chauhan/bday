@@ -34,7 +34,8 @@ export default function MusicToggle() {
   return (
     <motion.button
       onClick={togglePlay}
-      className="fixed top-5 right-5 z-[999] w-11 h-11 rounded-full flex items-center justify-center glass ripple-btn"
+      className="z-[999] w-11 h-11 rounded-full flex items-center justify-center glass ripple-btn"
+      style={{ position: "fixed", top: "1.25rem", right: "1.25rem", zIndex: 999 }}
       initial={{ opacity: 0, scale: 0, y: -10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ delay: 2.5, duration: 0.5, type: "spring" }}

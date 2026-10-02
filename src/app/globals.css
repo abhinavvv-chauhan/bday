@@ -82,11 +82,18 @@ html {
 }
 
 body {
+  margin: 0;
+  padding: 0;
   background: var(--cream);
   color: var(--dark-plum);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  margin: 0;
+  padding: 0;
 }
 
 /* ─── Scrollbar ─── */

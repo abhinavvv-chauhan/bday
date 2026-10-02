@@ -25,9 +25,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${outfit.variable} h-full antialiased scroll-smooth`}
+      className={`${playfair.variable} ${outfit.variable} antialiased`}
+      style={{ margin: 0, padding: 0 }}
     >
-      <body className="min-h-full flex flex-col font-sans bg-cream text-foreground">{children}</body>
+      <body className="font-sans" style={{ margin: 0, padding: 0 }}>{children}</body>
     </html>
   );
 }

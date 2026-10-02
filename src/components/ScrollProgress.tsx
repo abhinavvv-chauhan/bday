@@ -7,7 +7,10 @@ export default function ScrollProgress() {
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-[2px] z-[9999] bg-transparent pointer-events-none">
+    <div 
+      className="z-[9999] bg-transparent pointer-events-none"
+      style={{ position: "fixed", top: 0, left: 0, right: 0, height: "2px", zIndex: 9999 }}
+    >
       <motion.div
         className="h-full origin-left"
         style={{
