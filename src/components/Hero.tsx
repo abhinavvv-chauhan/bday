@@ -76,8 +76,9 @@ export default function Hero() {
       </motion.div>
 
       {/* ── Layered gradient overlays ── */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark-plum/30 via-transparent to-dark-plum/70" />
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark-plum/80 via-transparent to-transparent" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark-plum/50 via-dark-plum/40 to-dark-plum/80" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-dark-plum/90 via-dark-plum/30 to-transparent" />
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_center,rgba(44,26,29,0.3)_0%,transparent_60%)]" />
 
       {/* ── Animated floating particles ── */}
       {PARTICLES.map((p) => (
@@ -172,7 +173,11 @@ export default function Hero() {
                     }}
                     transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
                     className="inline-block text-4xl sm:text-5xl md:text-7xl font-serif text-cream leading-tight"
-                    style={{ transformOrigin: "bottom center", transformStyle: "preserve-3d" }}
+                    style={{ 
+                      transformOrigin: "bottom center", 
+                      transformStyle: "preserve-3d",
+                      textShadow: "0 4px 40px rgba(44,26,29,0.9), 0 2px 10px rgba(44,26,29,0.6)"
+                    }}
                   >
                     {char === " " ? "\u00A0" : char}
                   </motion.span>
@@ -196,7 +201,7 @@ export default function Hero() {
                       transformOrigin: "bottom center",
                       transformStyle: "preserve-3d",
                       color: "#F9D6D6",
-                      textShadow: "0 2px 30px rgba(230,176,170,0.9), 0 0 60px rgba(192,113,122,0.5)",
+                      textShadow: "0 4px 30px rgba(44,26,29,0.8), 0 2px 20px rgba(230,176,170,0.8), 0 0 60px rgba(192,113,122,0.6)",
                     }}
                   >
                     {char === " " ? "\u00A0" : char}
